@@ -5,6 +5,7 @@
 [![airbnb code style](https://img.shields.io/badge/code%20style-airbnb-fd5c63.svg)](https://github.com/airbnb/javascript)
 
 ---
+Extends [ImmutableJS Records](http://facebook.github.io/immutable-js/docs/#/Record) enabling class inheritance
 
 ## Dependencies
 - [ImmutableJS](https://github.com/facebook/immutable-js)
