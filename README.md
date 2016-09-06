@@ -19,28 +19,80 @@ npm install extendable-record --save
 ```javascript
 import { ExtendableRecord } from  'extendable-record';
 
-export class BaseModel extends ExtendableRecord {}
-BaseModel.defaultProperties = {
-  isRequired: false,
-  name: '',
-  id: null
-};
-
-export class PrimitiveModel extends BaseModel {
-  getValue() {
-    return this.value;
+class BaseModel extends ExtendableRecord {
+  isComplete() {
+    return true;
   }
-  setVaule(newValue) {
-    return this.set('value', newValue);
+  isValid() {
+    return true;
   }
 }
-PrimitiveModel.defaultProperties = {
+
+// default properties describe the set of properties which can be
+// set/read. Properties are exposed via getters, so you can use the syntax
+// var model = new BaseModel();
+// console.log(model.value);
+BaseModel.defaultProperties = {
   value: null
 };
 
-var myModel = PrimitiveModel({value: 2, id: 'myModelId'});
+class TextModel extends BaseModel {
+  get length() {
+    return this.value.length;
+  }
+  isComplete() {
+    return this.value.length !== 0;
+  }
+  isValid() {
+    return typeof this.value === 'string';
+  }
+  toLower() {
+    return this.set('value', this.value.toLocaleLowerCase());
+  }
+}
 
-var myNewModel = myModel.setValue(4)
+// default properties extend and overwrite the properties of
+// the parent. Here, TextModel instances will always default to '',
+// but we do have the option of adding extra properties
+TextModel.defaultProperties = {
+  value: ''
+};
+
+class EmailModel extends TextModel {
+  isValid() {
+    return super.isValid() && /^[^@]+@[^\.]+\.(?:com|edu|biz)$/.test(this.value);
+  }
+}
+
+class NumberModel extends BaseModel {
+  isValid() {
+    return typeof this.value === "number";
+  }
+  add(val) {
+    return this.set('value', this.value + val);
+  }
+  toString() {
+    return this.units ? `${this.value} ${this.units}` : this.value;
+  }
+}
+
+NumberModel.defaultProperties = {
+  value: 0,
+  units: null
+};
+
+
+
+const bobsEmail = new EmailModel({value: 'bob@gmail.com'});
+console.log(bobsEmail.isValid()); // true
+console.log(bobsEmail.set('value', 'bobATgmailDOTcom').isValid()); // false
+console.log(bobsEmail.isValid()); // true -- bobsEmail has not been mutated
+
+const myBank = new NumberModel({units: 'dollars'});
+console.log(myBank.toString()); // 0 dollars
+const myBankAfterDreamOfWinningLotto = myBank.add(100000000);
+console.log(myBankAfterDreamOfWinningLotto.toString()); // 100000000 dollars
+console.log(myBank.toString()); // 0 dollars -- myBank was not mutated :(
 
 ```
 
