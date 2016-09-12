@@ -9,5 +9,5 @@ export class PrimitiveModel extends BaseModel {
   }
 }
 PrimitiveModel.defaultProperties = {
-  value: null
+  value: null,
 };

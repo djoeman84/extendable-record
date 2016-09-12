@@ -1,6 +1,6 @@
-import { ExtendableRecord, abstract } from  '../../src/index.js';
+import { ExtendableRecord } from '../../src/index.js';
 
-import { PrimitiveModel } from  './PrimitiveModel';
+import { PrimitiveModel } from './PrimitiveModel';
 
 export class NumericModel extends PrimitiveModel {
   isPlural() {
@@ -10,26 +10,28 @@ export class NumericModel extends PrimitiveModel {
     return !this.isPlural();
   }
   toString() {
+    let str = '';
     if (this.units !== null) {
       const unitString = this.isPlural() ? this.units.plural : this.units.singular;
-      return `${this.value} ${unitString}`;
+      str = `${this.value} ${unitString}`;
     } else {
-      return this.value;
+      str = this.value;
     }
+    return str;
   }
 }
 
 NumericModel.defaultProperties = {
-  units: null
+  units: null,
 };
 
-export class Unit extends ExtendableRecord{
+export class Unit extends ExtendableRecord {
   constructor(singular, plural) {
-    super({singular: singular, plural: plural});
+    super({ singular, plural });
   }
 }
 
 Unit.defaultProperties = {
   singular: 'unit',
-  plural: 'units'
+  plural: 'units',
 };

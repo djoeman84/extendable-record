@@ -1,15 +1,15 @@
-import { ExtendableRecord, abstract } from  '../../src/index.js';
+import { ExtendableRecord } from '../../src/index.js';
+import { abstract } from './util';
 
 export class BaseModel extends ExtendableRecord {
-  isValid() {
-    abstract();
-  }
-  isComplete() {
-    abstract();
-  }
+
 }
+
+BaseModel.prototype.isValid = abstract;
+BaseModel.prototype.isComplete = abstract;
+
 BaseModel.defaultProperties = {
   isRequired: false,
   name: '',
-  id: null
+  id: null,
 };

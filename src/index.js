@@ -1,45 +1,42 @@
-import { Collection, Record, Map } from  'immutable';
+import { Collection, Record, Map } from 'immutable';
 
+import { getDetaultPropertiesForInstance } from './util';
+
+const INITIALIZED_TOKEN = '____isInitializedForImmutability:hqQUB1vW4XLV2EmvVZWnnNS5A';
+
+// eslint-disable-next-line import/prefer-default-export
 export class ExtendableRecord extends Collection.Keyed {
   constructor(values) {
     super();
-    const defaultValues = this.__getDefaultValues();
     const InstanceClassPrototype = Object.getPrototypeOf(this);
-    if (!InstanceClassPrototype.__isInitializedForImmutability) {
-      InstanceClassPrototype.__isInitializedForImmutability = true;
-      const keys = Object.keys(defaultValues);
-      keys.map(k => Object.defineProperty(InstanceClassPrototype, k, {
-        get() {
-          return this.get(k);
-        },
-        set(value) {
-          if (!this.__ownerID) throw new Error('Cannot set on an immutable record.');
-          this.set(k, value);
-        }
-      }));
+    const isInitialized = Object.prototype.hasOwnProperty.call(
+        InstanceClassPrototype, INITIALIZED_TOKEN);
+    if (!isInitialized) {
+      InstanceClassPrototype[INITIALIZED_TOKEN] = true;
+      const defaultValues = getDetaultPropertiesForInstance(this);
+      const keys = Object.getOwnPropertyNames(defaultValues);
+      keys.forEach((key) => {
+        Object.defineProperty(InstanceClassPrototype, key, {
+          get() {
+            return this.get(key);
+          },
+          set(value) {
+            // eslint-disable-next-line no-underscore-dangle
+            if (!this.__ownerID) throw new Error('Cannot set on an immutable record.');
+            this.set(key, value);
+          },
+        });
+      });
       InstanceClassPrototype.size = keys.length;
-      InstanceClassPrototype._name = ''; // TODO
+      /* eslint-disable no-underscore-dangle */
+      InstanceClassPrototype._name = InstanceClassPrototype.constructor.name;
       InstanceClassPrototype._keys = keys;
       InstanceClassPrototype._defaultValues = defaultValues;
+      /* eslint-enable no-underscore-dangle */
     }
+    // eslint-disable-next-line no-underscore-dangle, new-cap
     this._map = Map(values);
   }
-
-  __getDefaultValues() {
-    let constructors = [];
-    for (let o = this; o != null; o = Object.getPrototypeOf(o)) {
-      constructors.push(o.constructor);
-    }
-    return constructors.reverse().reduce((prev, cnst) => Object.assign(prev, cnst.defaultProperties), {});
-  }
-}
-
-export function abstract() {
-  throw new Error('Abstract Method, must be overridden');
-}
-
-export function assert(condition, msg) {
-  if (condition) throw new Error(msg)
 }
 
 const ExtendableRecordPrototype = ExtendableRecord.prototype;
@@ -53,9 +50,11 @@ ExtendableRecordPrototype.clear = RecordPrototype.clear;
 ExtendableRecordPrototype.set = RecordPrototype.set;
 ExtendableRecordPrototype.remove = RecordPrototype.remove;
 ExtendableRecordPrototype.wasAltered = RecordPrototype.wasAltered;
+/* eslint-disable no-underscore-dangle */
 ExtendableRecordPrototype.__iterator = RecordPrototype.__iterator;
 ExtendableRecordPrototype.__iterate = RecordPrototype.__iterate;
 ExtendableRecordPrototype.__ensureOwner = RecordPrototype.__ensureOwner;
+/* eslint-enable no-underscore-dangle */
 
 ExtendableRecordPrototype[DELETE] = ExtendableRecordPrototype.remove;
 ExtendableRecordPrototype.deleteIn = undefined;
