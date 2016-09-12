@@ -1,4 +1,5 @@
 [![Version](https://img.shields.io/npm/v/extendable-record.svg)](https://www.npmjs.com/package/extendable-record)
+[![Build Status](https://travis-ci.org/djoeman84/extendable-record.svg?branch=master)](https://travis-ci.org/djoeman84/extendable-record)
 [![MIT license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://github.com/djoeman84/extendable-record/blob/master/LICENSE)
 [![dependencies](https://david-dm.org/djoeman84/extendable-record.svg)](https://david-dm.org/djoeman84/extendable-record)
 [![devDependency Status](https://david-dm.org/djoeman84/extendable-record/dev-status.svg)](https://david-dm.org/djoeman84/extendable-record#info=devDependencies)
