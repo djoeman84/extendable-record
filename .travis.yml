@@ -13,3 +13,9 @@ branches:
 cache:
   directories:
   - $HOME/.npm
+deploy:
+  provider: npm
+  on:
+    branch: master
+  api_key:
+    secure: 28a+vvH3Pl66OxYgTs+M5NJemSK0xJZAyxBOoCaZbYVUr8Q8fhiwkv9ttGmNJsiY72iR7bjQ0+ZuRrIU7VkVtL8uE2Df7hazFwIKEyrHJ0kZC/AliCwgdvi/yKqryS7PBsghwW/9Ze5PNG9btxhysDh+uIy68rH4WPTrCskgA8FebfwzvbhzyBiUOzzcVdWMzYcmd+qr8AgzHpdaFhtxMNBhYpBCi+/jpGGmGVptWS4nwWVMrihKYYIIVNHf/R18YSCEwRBF2gZGbuhiFc7yRud6dnki8cDTCO7lB40vH5uNYffM6HaX3zgCI9HNtwCq27+7JgRWdJGZG8XL0zfJo7STgEWMGAwd4ctT5toVkgZlpJUD6/KBEYYBG4oJR4m6VzqRf2zURddes3IjWxf0g1eh5KgWgJXge4rtcAlzMo4Z88t33/fMg3gyjeREvUG8E1iXnX9UFYKxGFk8KiwAlYuOMD1YQnPv+DL9u08l9wEqgE0lsSBUB3HXgrUym4ryLFkPmXQEX7ZG92DwlAmrLzNCdigX1Ti1qL3q0GHTRUlWXKe64lRd7Ov05VL8Gm2U/alcxT5RUD6YTrIQc/rUZJ/kTQyjQkvdN03bGvzjSYr+G03LWY+u6NJPD/9l5rNulWRiThOYcjDsdd/5v9RbcW0sMnIlb7K/5rQDWjRypoY=
