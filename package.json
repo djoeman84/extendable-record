@@ -1,6 +1,6 @@
 {
   "name": "extendable-record",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "license": "MIT",
   "description": "Extendable (Inheritable) Immutable Records for Immutable Object Oriented Patterns",
   "keywords": [
@@ -19,7 +19,8 @@
   "scripts": {
     "clean": "rimraf dist",
     "build": "babel src -d dist",
-    "build:babel": "webpack",
+    "build:bower": "webpack",
+    "build:bower-prod": "NODE_ENV=production webpack",
     "lint": "eslint src tests",
     "lint:fix": "npm run lint -- --fix",
     "test": "mocha tests --compilers js:babel-register",
