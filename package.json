@@ -43,7 +43,7 @@
     "eslint-plugin-react": "^6.2.1",
     "mocha": "^3.0.2",
     "rimraf": "^2.5.2",
-    "webpack": "^1.13.2"
+    "webpack": "^2.5.1"
   },
   "dependencies": {
     "babel-runtime": "^6.6.1",
